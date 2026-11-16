@@ -10,15 +10,18 @@ function render(){
  $('name-title').textContent=details.name+"'s";$('coin-karat').textContent=purity+'K';
  $('coin-fact').textContent=Number(details.weight).toLocaleString('en-US',{maximumFractionDigits:3})+' g · '+purity+'K';
  $('paid-fact').textContent=inr(Number(details.paid));$('cost-fact').textContent=usd(originalUsd);
- if(!Number.isFinite(rate)||rate<=0){$('rate-label').textContent='Gold rate unavailable';$('rate-date').textContent='';$('inr-value').textContent='—';$('usd-value').textContent='—';$('profit-value').textContent='—';$('status').textContent='Tap the gear to enter a local gold rate.';return}
+ if(!Number.isFinite(rate)||rate<=0){$('rate-label').textContent='Gold rate unavailable';$('rate-date').textContent='';$('inr-value').textContent='—';$('usd-value').textContent='—';$('trend').className='trend';$('trend-arrow').textContent='';$('trend-text').textContent='Change unavailable';$('status').textContent='Tap the gear to enter a local gold rate.';return}
  $('rate-label').textContent=purity+'K '+(details.localRate===null?'India benchmark':'local quote')+' · '+inr(rate,2)+'/g';
  $('rate-date').textContent=details.localRate===null?dateText(gold.date):'Your rate';
  const valueInr=rate*Number(details.weight);$('inr-value').textContent=inr(valueInr);
- if(!fx){$('usd-value').textContent='—';$('profit-value').textContent='—';$('fx-detail').textContent='Exchange rate unavailable';$('status').textContent='Waiting for the latest USD/INR rate.';return}
+ if(!fx){$('usd-value').textContent='—';$('trend').className='trend';$('trend-arrow').textContent='';$('trend-text').textContent='Change unavailable';$('fx-detail').textContent='Exchange rate unavailable';$('status').textContent='Waiting for the latest USD/INR rate.';return}
  const valueUsd=valueInr/fx.rate,change=valueUsd-originalUsd;
- $('usd-value').textContent=usd(valueUsd);$('profit-value').textContent=(change>=0?'+':'−')+usd(Math.abs(change));
+ $('usd-value').textContent=usd(valueUsd);
  $('fx-detail').textContent='$1 = ₹'+fx.rate.toFixed(2)+' · '+dateText(fx.date);
- $('profit-detail').textContent=(change>=0?'+':'−')+Math.abs(change/originalUsd*100).toFixed(1)+'% from '+usd(originalUsd);
+ const direction=change>0?'gain':change<0?'loss':'flat';
+ $('trend').className='trend '+direction;
+ $('trend-arrow').textContent=direction==='gain'?'↑':direction==='loss'?'↓':'→';
+ $('trend-text').textContent=(direction==='gain'?'Profit ':direction==='loss'?'Loss ':'No change · ')+usd(Math.abs(change))+' ('+Math.abs(change/originalUsd*100).toFixed(1)+'%)';
  $('status').textContent=details.localRate===null?'Published India rate · enter a Hyderabad quote in settings':'Your Hyderabad / Malabar quote · saved on this device';
 }
 function fillForm(){

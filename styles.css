@@ -12,3 +12,9 @@ dialog{width:min(520px,calc(100vw - 26px));max-height:90dvh;overflow:auto;border
 @media(max-width:370px){.headline h1{font-size:27px}.coin{width:85px;height:85px}.values strong{font-size:20px}.values .profit strong{font-size:21px}.rate{font-size:9px}.rate #rate-date{font-size:8px}}
 @media(max-height:610px){.app{grid-template-rows:43px minmax(0,1fr) 23px}main{grid-template-rows:minmax(75px,1fr) auto minmax(125px,1.3fr) auto auto;gap:5px;padding:5px 0}.headline h1{font-size:clamp(25px,5vh,43px)}.coin{width:min(85px,15vh);height:min(85px,15vh)}.coin strong{font-size:23px}.values article{padding:9px}.values strong{font-size:clamp(19px,4.5vh,30px)}.facts{padding:5px 0}.status{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.coinfall{display:none}.coin{animation:none}}
+.values{grid-template-columns:1fr 1fr}
+.trend{display:flex;align-items:center;gap:9px;margin-top:clamp(9px,2vh,24px);padding-top:clamp(9px,2vh,24px);border-top:1px solid #ffffff35;font-size:clamp(12px,1.5vw,17px);font-weight:700;line-height:1.25;color:#d8e9dc}
+.trend-arrow{font-size:1.4em;line-height:1;font-weight:700}.trend.loss{color:#ff9d91}.trend.gain{color:#a3e6ae}.trend.flat{color:#d8e9dc}
+@media(max-width:650px){.values{grid-template-columns:1fr 1fr;grid-template-rows:1fr}.values article{justify-content:center}.values .dollars{gap:7px}.trend{font-size:11px;gap:5px;margin-top:7px;padding-top:9px}.trend-arrow{font-size:18px}}
+@media(max-width:370px){.trend{font-size:10px}}
+@media(max-height:610px){.trend{margin-top:5px;padding-top:5px}}
