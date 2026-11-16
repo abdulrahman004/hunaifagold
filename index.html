@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#183426">
+  <meta name="description" content="A little gold coin, a big question: what is Hunaifa's 22K gold worth today?">
+  <title>What is Hunaifa's gold worth today?</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="coinfall" aria-hidden="true"><span>✦</span><span>●</span><span>✦</span><span>●</span><span>✦</span><span>●</span><span>✦</span><span>●</span><span>✦</span></div>
+  <div class="site-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">H</span><span>Hunaifa's little treasure</span></div>
+      <span class="location">📍 Hyderabad, India</span>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="sparkle">✦</span> THE GOLD COIN TRACKER</div>
+          <h1 id="page-title">What is <em>Hunaifa's gold</em> worth today?</h1>
+          <p>One 2 gram gold coin. A little bit of saving. Let's see what her treasure is worth now.</p>
+          <div class="hero-tags"><span>22K gold</span><span>2.000 grams</span><span>Bought Aug 7, 2026</span></div>
+        </div>
+        <div class="coin-scene" aria-hidden="true"><div class="coin-halo"></div><div class="big-coin"><div class="coin-inner"><span class="coin-star">✦</span><strong>22K</strong><small>HUNAIFA'S<br>GOLD</small><span class="coin-dot">✦</span></div></div><span class="orbit orbit-one">✦</span><span class="orbit orbit-two">✦</span></div>
+      </section>
+
+      <section class="value-section" aria-labelledby="value-title">
+        <div class="section-top"><div><span class="section-kicker">TODAY'S ESTIMATE</span><h2 id="value-title">Her coin's value</h2></div><span id="rate-status" class="status loading">Loading rates…</span></div>
+        <div class="value-grid">
+          <article class="value-card primary"><span class="card-label">In Indian rupees</span><strong id="value-inr" class="big-value">—</strong><span class="card-sub">2 g × today's 22K rate</span></article>
+          <article class="value-card"><span class="card-label">In US dollars</span><strong id="value-usd" class="big-value">—</strong><span id="fx-detail" class="card-sub">Converted at today's USD/INR rate</span></article>
+          <article class="value-card profit"><span class="card-label">Change since purchase</span><strong id="profit-usd" class="big-value">—</strong><span id="profit-detail" class="card-sub">Compared with her original dollar cost</span></article>
+        </div>
+        <p id="rate-meta" class="rate-meta" aria-live="polite">Checking the latest published gold and exchange rates.</p>
+      </section>
+
+      <section class="story-grid">
+        <article class="story-card">
+          <span class="section-kicker">THE STARTING POINT</span>
+          <h2>A coin bought with savings</h2>
+          <p>Hunaifa's coin was purchased at Malabar Gold & Diamonds in Hyderabad on August 7, 2026.</p>
+          <div class="receipt-facts"><div><span>Gold inside</span><strong>2.000 g · 22K</strong></div><div><span>Total paid, including charges and GST</span><strong>₹29,100</strong></div><div><span>USD/INR on purchase date</span><strong>₹95.15 per $1</strong></div><div><span>Original cost in dollars</span><strong id="purchase-usd">$305.83</strong></div></div>
+        </article>
+        <article class="story-card how-card">
+          <span class="section-kicker">HOW WE COUNT IT</span>
+          <h2>Simple coin math</h2>
+          <div class="formula"><span>Today's 22K rate / gram</span><b>×</b><span>2 grams</span><b>=</b><strong>Estimated gold value</strong></div>
+          <p>Purchase charges and GST are part of the original cost. They are not added to today's gold value. The estimate assumes a sale at the shown rate with no further deductions; a jeweller's actual buyback quote may differ.</p>
+        </article>
+      </section>
+
+      <section class="quote-section" aria-labelledby="quote-title">
+        <div><span class="section-kicker">HAVE A LOCAL QUOTE?</span><h2 id="quote-title">Try a Hyderabad or Malabar rate</h2><p>Enter a current 22K price per gram from a local shop to recalculate the estimate. This only changes what you see on this device.</p></div>
+        <form id="rate-form" class="rate-form"><label for="custom-rate">22K rate per gram (₹)</label><div class="input-row"><span>₹</span><input id="custom-rate" type="number" min="1" max="1000000" step="0.01" inputmode="decimal" placeholder="e.g. 12540"><button type="submit">Use this rate</button></div><button id="reset-rate" type="button" class="text-button" hidden>Use published rate again</button></form>
+      </section>
+    </main>
+
+    <footer><span>Made for Hunaifa's gold coin ✦</span><div><a href="https://snapdata.dev/docs/" target="_blank" rel="noopener noreferrer">Gold data</a><a href="https://frankfurter.dev/" target="_blank" rel="noopener noreferrer">FX data</a><a href="https://www.malabargoldanddiamonds.com/in/pan-india/en/live-gold-rate.html" target="_blank" rel="noopener noreferrer">Malabar rates</a></div></footer>
+  </div>
+</body>
+</html>
