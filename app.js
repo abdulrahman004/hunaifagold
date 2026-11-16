@@ -5,23 +5,27 @@ const usd=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maxi
 const dateText=d=>new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric'}).format(new Date(d+'T12:00:00Z'));
 function savedDetails(){try{const s=JSON.parse(localStorage.getItem(key));if(s&&[18,22,24].includes(Number(s.karat))&&Number(s.weight)>0&&Number(s.paid)>0&&Number(s.purchaseFx)>0)return {...defaults,...s}}catch{}return {...defaults}}
 let details=savedDetails(), gold=null, fx=null;
+function showTrend(container,arrow,text,change,original,format){
+ const direction=change>0?'gain':change<0?'loss':'flat';
+ $(container).className='trend'+(container==='inr-trend'?' inr-trend':'')+' '+direction;
+ $(arrow).textContent=direction==='gain'?'↑':direction==='loss'?'↓':'→';
+ $(text).textContent=(direction==='gain'?'Profit ':direction==='loss'?'Loss ':'No change · ')+format(Math.abs(change))+' ('+Math.abs(change/original*100).toFixed(1)+'%)';
+}
 function render(){
  const purity=Number(details.karat), rate=details.localRate===null?gold?.rates[purity]:Number(details.localRate), originalUsd=Number(details.paid)/Number(details.purchaseFx);
  $('name-title').textContent=details.name+"'s";$('coin-karat').textContent=purity+'K';
  $('coin-fact').textContent=Number(details.weight).toLocaleString('en-US',{maximumFractionDigits:3})+' g · '+purity+'K';
  $('paid-fact').textContent=inr(Number(details.paid));$('cost-fact').textContent=usd(originalUsd);
- if(!Number.isFinite(rate)||rate<=0){$('rate-label').textContent='Gold rate unavailable';$('rate-date').textContent='';$('inr-value').textContent='—';$('usd-value').textContent='—';$('trend').className='trend';$('trend-arrow').textContent='';$('trend-text').textContent='Change unavailable';$('status').textContent='Tap the gear to enter a local gold rate.';return}
+ if(!Number.isFinite(rate)||rate<=0){$('rate-label').textContent='Gold rate unavailable';$('rate-date').textContent='';$('inr-value').textContent='—';$('usd-value').textContent='—';$('inr-trend').className='trend inr-trend';$('inr-trend-arrow').textContent='';$('inr-trend-text').textContent='Change unavailable';$('trend').className='trend';$('trend-arrow').textContent='';$('trend-text').textContent='Change unavailable';$('status').textContent='Tap the gear to enter a local gold rate.';return}
  $('rate-label').textContent=purity+'K '+(details.localRate===null?'India benchmark':'local quote')+' · '+inr(rate,2)+'/g';
  $('rate-date').textContent=details.localRate===null?dateText(gold.date):'Your rate';
  const valueInr=rate*Number(details.weight);$('inr-value').textContent=inr(valueInr);
+ showTrend('inr-trend','inr-trend-arrow','inr-trend-text',valueInr-Number(details.paid),Number(details.paid),inr);
  if(!fx){$('usd-value').textContent='—';$('trend').className='trend';$('trend-arrow').textContent='';$('trend-text').textContent='Change unavailable';$('fx-detail').textContent='Exchange rate unavailable';$('status').textContent='Waiting for the latest USD/INR rate.';return}
  const valueUsd=valueInr/fx.rate,change=valueUsd-originalUsd;
  $('usd-value').textContent=usd(valueUsd);
  $('fx-detail').textContent='$1 = ₹'+fx.rate.toFixed(2)+' · '+dateText(fx.date);
- const direction=change>0?'gain':change<0?'loss':'flat';
- $('trend').className='trend '+direction;
- $('trend-arrow').textContent=direction==='gain'?'↑':direction==='loss'?'↓':'→';
- $('trend-text').textContent=(direction==='gain'?'Profit ':direction==='loss'?'Loss ':'No change · ')+usd(Math.abs(change))+' ('+Math.abs(change/originalUsd*100).toFixed(1)+'%)';
+ showTrend('trend','trend-arrow','trend-text',change,originalUsd,usd);
  $('status').textContent=details.localRate===null?'Published India rate · enter a Hyderabad quote in settings':'Your Hyderabad / Malabar quote · saved on this device';
 }
 function fillForm(){
