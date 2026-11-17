@@ -3,8 +3,9 @@ const key='hunaifa-gold-details-v1', $=id=>document.getElementById(id);
 const inr=(n,d=0)=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:d}).format(n);
 const usd=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(n);
 const dateText=d=>new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric'}).format(new Date(d+'T12:00:00Z'));
+const compactDate=d=>new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'2-digit'}).format(new Date(d+'T12:00:00Z'));
 function savedDetails(){try{const s=JSON.parse(localStorage.getItem(key));if(s&&[18,22,24].includes(Number(s.karat))&&Number(s.weight)>0&&Number(s.paid)>0&&Number(s.purchaseFx)>0)return {...defaults,...s}}catch{}return {...defaults}}
-let details=savedDetails(), gold=null, fx=null;
+let details=savedDetails(), gold=null, fx=null, ratesLoaded=false;
 function showTrend(container,arrow,text,change,original,format){
  const direction=change>0?'gain':change<0?'loss':'flat';
  $(container).className='trend'+(container==='inr-trend'?' inr-trend':'')+' '+direction;
@@ -13,6 +14,7 @@ function showTrend(container,arrow,text,change,original,format){
 }
 function render(){
  const purity=Number(details.karat), rate=details.localRate===null?gold?.rates[purity]:Number(details.localRate), originalUsd=Number(details.paid)/Number(details.purchaseFx);
+ $('rate-updated').textContent=ratesLoaded?'Rates updated: gold '+(details.localRate===null?(gold?.date?compactDate(gold.date):'unavailable'):'your quote')+' · FX '+(fx?.date?compactDate(fx.date):'unavailable'):'Checking rate dates…';
  $('name-title').textContent=details.name+"'s";$('coin-karat').textContent=purity+'K';
  $('coin-fact').textContent=Number(details.weight).toLocaleString('en-US',{maximumFractionDigits:3})+' g · '+purity+'K';
  $('paid-fact').textContent=inr(Number(details.paid));$('cost-fact').textContent=usd(originalUsd);
@@ -52,6 +54,7 @@ async function loadRates(){
   if(rates[22])gold={rates,date:data.coverage?.to};
  }
  if(responses[1].status==='fulfilled'){const d=responses[1].value;if(d.base==='USD'&&d.quote==='INR'&&Number.isFinite(d.rate)&&d.rate>0)fx={rate:d.rate,date:d.date}}
+ ratesLoaded=true;
  render();
 }
 render();loadRates();
